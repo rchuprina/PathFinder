@@ -1,7 +1,7 @@
 NAME = pathfinder
 
 CFLAGS = -std=c11 -Wall -Wextra -Werror -Wpedantic
-SRCS = src/main.c src/mx_errors.c src/mx_parser.c
+SRCS = src/main.c src/mx_errors.c src/mx_parser.c src/edge_list.c src/node_list.c
 RSRCS = $(SRCS:src/%=%)
 INC = inc/pathfinder.h inc/libmx.h
 RINC = $(INC:inc/%=%)
