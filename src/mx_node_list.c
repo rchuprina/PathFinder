@@ -23,7 +23,7 @@ t_node **mx_createnode(int num)
     {
         node[i] = (t_node *)malloc(sizeof(t_node));
         node[i]->name = NULL;
-        node[i]->edges = NULL;
+        node[i]->path = NULL;
     }
     return node;
 }
@@ -35,7 +35,13 @@ void mx_add_node(t_node **node, char **arr, int num)
 
     if(indexa < 0 || indexb < 0)
         mx_invalid_number(node, arr, num);    
-    mx_add_edge(node[indexa], node[indexb], mx_atoi(arr[2]));
+    mx_add_path(node[indexa], node[indexb], mx_atoi(arr[2]));
     mx_strdel(&arr[2]);
     free(arr);
+}
+
+void mx_add_path(t_node *n1, t_node *n2, int val)
+{
+    mx_add_to_list(&n1->path, n2, val);
+    mx_add_to_list(&n2->path, n1, val);
 }

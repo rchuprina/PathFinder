@@ -40,18 +40,18 @@ void mx_print_line_err(int line)
 
 void mx_invalid_number(t_node **node, char **arr, int num)
 {
-    t_edge * p = NULL;
+    t_path * p = NULL;
 
     mx_del_strarr(&arr);
     for (int i = 0; i < num; i++)
     {
         if (node[i]->name)
             free(node[i]->name);
-        while (node[i]->edges)
+        while (node[i]->path)
         {
-            p = ((t_edge *)node[i]->edges)->next;
-            free(node[i]->edges);
-            node[i]->edges = p;
+            p = node[i]->path->next;
+            free(node[i]->path);
+            node[i]->path = p;
         }
     }
     mx_print_line_err(-1);

@@ -58,7 +58,7 @@ static char *get_word(char **str)
     while (*(*str) != ',' && *(*str) != '-')
     {
         if ((!i && (*(*str) < 'A' || *(*str) > 'Z')) ||
-            (i && (*(*str) < 'a' && *(*str) > 'z')) || !(*(*str)))
+            (i && (*(*str) < 'a' || *(*str) > 'z')) || !(*(*str)))
         {
             mx_strdel(&s);
             return NULL;
