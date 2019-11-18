@@ -59,19 +59,6 @@ void mx_add_to_list(t_path **list, void *node, int val)
         *list = mx_create_path(node, val);
 }
 
-void mx_clean_list(t_path **path)
-{
-    t_path *p = NULL;
-
-    while (*path)
-    {
-        p = (*path)->next;
-        free(*path);
-        *path = p;        
-    }
-    *path = NULL;
-}
-
 void mx_poppath_back(t_path **head)
 {
     if (*head)

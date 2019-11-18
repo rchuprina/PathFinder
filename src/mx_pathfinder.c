@@ -26,7 +26,11 @@ void mx_clean_pathfinder(t_path **pathfinder)
     while (*pathfinder)
     {
         p = (*pathfinder)->next;
-        mx_clean_list(((t_path *)(*pathfinder))->node);
+        /*while ((*pathfinder)->node)
+        {
+            t_path *node = (t_path *)(*pathfinder)->node;
+            mx_poppath_back(&node);
+        }*/
         free(*pathfinder);
         *pathfinder = p;        
     }
@@ -37,7 +41,7 @@ void mx_get_paths(t_path **pathfinder, t_path *path, t_path *prev, t_node *end, 
 {
     for (t_path *p = ((t_node *)prev->node)->path; p; p = p->next)
     {
-        if ((*pathfinder)->val > counter + p->val && !mx_contpath(path, p->node))
+        if ((*pathfinder)->val >= counter + p->val && !mx_contpath(path, p->node))
         {
             mx_pushpath_back(&path, p->node, p->val);
             counter += p->val;
@@ -47,6 +51,59 @@ void mx_get_paths(t_path **pathfinder, t_path *path, t_path *prev, t_node *end, 
                 mx_get_paths(pathfinder, path, p, end, counter);
             counter -= p->val;
             mx_poppath_back(&path);
+        }
+    }
+}
+
+void mx_print_result(t_node **node, int number)
+{
+    t_path *path = NULL;
+    t_path *pathfinder = NULL;
+
+    for (int i = 0; i < number - 1; i++)
+    {
+        for (int j = i + 1; j < number; j++)
+        {
+            mx_pushpath_back(&path, node[i], 0);
+            mx_add_to_list(&pathfinder, path, 2147483647);
+            mx_get_paths(&pathfinder, path, path, node[j], 0);
+            int min = pathfinder->val;
+            for (t_path *p = pathfinder; p->val == min; p = p->next)
+            {
+                mx_printstr("========================================\n");
+                mx_printstr("Path: ");
+                mx_printstr(node[i]->name);
+                mx_printstr(" -> ");
+                mx_printstr(node[j]->name);
+                mx_printstr("\n");
+
+                mx_printstr("Route: ");
+                for (t_path *p2 = p->node; p2; p2 = p2->next)
+                {
+                    mx_printstr(((t_node *)p2->node)->name);
+                    if (p2->next)
+                        mx_printstr(" -> ");
+                }
+                mx_printstr("\n");
+
+                mx_printstr("Distance: ");
+                if (((t_node *)((t_path *)p->node)->next->node) != node[j])
+                {
+                    for (t_path *p2 = ((t_path *)p->node)->next; p2; p2 = p2->next)
+                    {
+                        mx_printint(p2->val);
+                        if (p2->next)
+                            mx_printstr(" + ");
+                    }
+                    mx_printstr(" = ");
+                }
+                mx_printint(p->val);
+                mx_printstr("\n");
+                mx_printstr("========================================\n");
+            }
+            while (path)
+                mx_poppath_back(&path);
+            mx_clean_pathfinder(&pathfinder);
         }
     }
 }

@@ -45,3 +45,49 @@ void mx_add_path(t_node *n1, t_node *n2, int val)
     mx_add_to_list(&n1->path, n2, val);
     mx_add_to_list(&n2->path, n1, val);
 }
+
+int mx_get_number(int fd)
+{
+    int number = 0;
+    char *str = NULL;
+
+    if (mx_read_line(&str, 10, '\n', fd) == -1)
+    {
+        mx_strdel(&str);
+        mx_print_line_err(1);
+    }
+    if (!mx_currect_number(str))
+    {
+        mx_strdel(&str);
+        mx_print_line_err(1);
+    }
+    number = mx_atoi(str);
+    mx_strdel(&str);
+    return number;
+}
+
+t_node **mx_get_node(int number, int fd)
+{
+    t_node **node = mx_createnode(number);
+    char *str = NULL;
+    char **arr = NULL;
+    int line = 2;
+    while (mx_read_line(&str, 10, '\n', fd) != -1)
+    {
+        arr = mx_parser(str);
+        if (!arr)
+        {
+            mx_strdel(&str);
+            mx_print_line_err(line);
+        }
+        mx_add_node(node, arr, number);
+        line++;
+    }
+    if (str)
+    {
+        mx_strdel(&str);
+        mx_print_line_err(line);
+    }
+    mx_strdel(&str);
+    return node;
+}

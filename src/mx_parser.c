@@ -76,7 +76,7 @@ static char *get_word(char **str)
     return s;
 }
 
-bool currect_number(char *str)
+bool mx_currect_number(char *str)
 {
     char *buf = get_digit(&str);
 
@@ -86,7 +86,7 @@ bool currect_number(char *str)
     return true;
 }
 
-char **parser(char *str)
+char **mx_parser(char *str)
 {
     char **arr = mx_strarrnew(3);
     char *s = NULL;
