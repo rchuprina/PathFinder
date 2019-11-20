@@ -42,17 +42,26 @@ void mx_clean_pathfinder(t_path **pathfinder)
 }
 
 void mx_get_paths(t_path **pathfinder, t_path *path, t_path *prev, t_node *end, int counter)
-{
+{   
     for (t_path *p = ((t_node *)prev->node)->path; p; p = p->next)
     {
-        if ((*pathfinder)->val >= counter + p->val && !mx_contpath(path, p->node))
+        if (((t_node *)p->node) == end && (*pathfinder)->val >= counter + p->val)
         {
             mx_pushpath_back(&path, p->node, p->val);
             counter += p->val;
-            if (((t_node *)p->node) == end)
-                mx_add_to_list(pathfinder, mx_pathcpy(path), counter);
-            else
-                mx_get_paths(pathfinder, path, p, end, counter);
+            mx_add_to_list(pathfinder, mx_pathcpy(path), counter);
+            counter -= p->val;
+            mx_poppath_back(&path);
+        }
+    }
+    for (t_path *p = ((t_node *)prev->node)->path; p; p = p->next)
+    {
+        if (((t_node *)p->node) != end && (*pathfinder)->val >= counter + p->val && 
+            !mx_contpath(path, p->node))
+        {
+            mx_pushpath_back(&path, p->node, p->val);
+            counter += p->val;
+            mx_get_paths(pathfinder, path, p, end, counter);
             counter -= p->val;
             mx_poppath_back(&path);
         }
@@ -111,3 +120,4 @@ void mx_print_result(t_node **node, int number)
         mx_poppath_back(&pathfinder);
     }
 }
+
