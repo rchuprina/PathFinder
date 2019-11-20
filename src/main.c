@@ -13,6 +13,9 @@ int main(int argc, char **argv)
     number = mx_get_number(fd);
     node = mx_get_node(number, fd);
     close(fd);
+    for (int i = 0; i < number; i++)
+        if (!node[i]->name)
+            mx_print_line_err(-1);
     mx_print_result(node, number);
     mx_exit(node, number);
 }

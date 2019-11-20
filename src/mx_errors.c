@@ -14,7 +14,7 @@ void mx_print_file_err(int err, char *file)
             error = mx_strdup("usage: ./pathfinder [filename]\n");
         write(2, error, mx_strlen(error));
         mx_strdel(&error);
-        system("leaks -q pathfinder");
+        //system("leaks -q pathfinder");
         exit(0);
 
     }
@@ -35,7 +35,7 @@ void mx_print_line_err(int line)
         error = mx_strdup("error: invalid number of islands\n");
     write(2, error, mx_strlen(error));
     mx_strdel(&error);
-        system("leaks -q pathfinder");
+    //system("leaks -q pathfinder");
     exit(0);
 }
 
@@ -63,6 +63,6 @@ void mx_exit(t_node **node, int number)
         free(node[i]);
     }
     free(node);
-        system("leaks -q pathfinder");
+    //system("leaks -q pathfinder");
     exit(0);
 }
