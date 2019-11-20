@@ -26,10 +26,6 @@ void mx_clean_pathfinder(t_path **pathfinder)
     while (*pathfinder)
     {
         p = (*pathfinder)->next;
-        while ((*pathfinder)->node)
-        {
-            mx_poppath_back((t_path **)(&(*pathfinder)->node));
-        }
         free(*pathfinder);
         *pathfinder = p;        
     }
@@ -61,11 +57,11 @@ void mx_print_result(t_node **node, int number)
 
     for (int i = 0; i < number - 1; i++)
     {
+        mx_pushpath_back(&path, node[i], 0);
         for (int j = i + 1; j < number; j++)
-        {
+        {/*
             mx_printstr("before\n");
-            system("leaks -q pathfinder");
-            mx_pushpath_back(&path, node[i], 0);
+            system("leaks -q pathfinder");*/
             mx_add_to_list(&pathfinder, path, 2147483647);
             mx_get_paths(&pathfinder, path, path, node[j], 0);
             int min = pathfinder->val;
@@ -103,10 +99,9 @@ void mx_print_result(t_node **node, int number)
                 mx_printstr("========================================\n");
             }
             mx_clean_pathfinder(&pathfinder);/*
-            while (path)
-                mx_poppath_back(&path);*/
             mx_printstr("after\n");
-            system("leaks -q pathfinder");
+            system("leaks -q pathfinder");*/
         }
+        mx_poppath_back(&path);
     }
 }

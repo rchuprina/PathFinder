@@ -69,8 +69,6 @@ void mx_poppath_back(t_path **head)
 
             while (p->next->next)
                 p = p->next;
-
-            mx_printstr(((t_node *)p->next->node)->name);
             free(p->next);
             p->next = NULL;
         }

@@ -83,7 +83,7 @@ t_node **mx_get_node(int number, int fd)
         mx_add_node(node, arr, number);
         line++;
     }
-    if (str)
+    if (*str)
     {
         mx_strdel(&str);
         mx_print_line_err(line);

@@ -49,6 +49,13 @@ static char *get_digit(char **str)
     return s;
 }
 
+static bool is_alpha(char c)
+{
+    if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+        return true;
+    return false;
+}
+
 static char *get_word(char **str)
 {
     char *buf = NULL;
@@ -57,8 +64,7 @@ static char *get_word(char **str)
 
     while (*(*str) != ',' && *(*str) != '-')
     {
-        if ((!i && (*(*str) < 'A' || *(*str) > 'Z')) ||
-            (i && (*(*str) < 'a' || *(*str) > 'z')) || !(*(*str)))
+        if (!is_alpha(*(*str)) || !(*(*str)))
         {
             mx_strdel(&s);
             return NULL;
