@@ -37,7 +37,6 @@ void mx_print_line_err(int line)
     exit(0);
 }
 
-
 void mx_invalid_number(t_node **node, char **arr, int num)
 {
     free(arr[2]);
@@ -50,4 +49,17 @@ void mx_invalid_number(t_node **node, char **arr, int num)
             mx_poppath_back(&node[i]->path);
     }
     mx_print_line_err(-1);
+}
+
+void mx_exit(t_node **node, int number)
+{
+    for (int i = 0; i < number; i++)
+    {
+        free(node[i]->name);
+        while(node[i]->path)
+            mx_poppath_back(&node[i]->path);
+        free(node[i]);
+    }
+    free(node);
+    exit(0);
 }

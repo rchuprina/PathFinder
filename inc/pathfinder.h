@@ -3,7 +3,6 @@
 
 #include "libmx.h"
 
-
 typedef struct s_path
 {
     int val;
@@ -37,6 +36,7 @@ void mx_print_result(t_node **node, int number);
 //error
 void mx_print_file_err(int err, char *file);
 void mx_print_line_err(int line);
+void mx_exit(t_node **node, int number);
 void mx_invalid_number(t_node **node, char **arr, int num);
 
 //parser

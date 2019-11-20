@@ -33,8 +33,14 @@ void mx_add_node(t_node **node, char **arr, int num)
     int indexa = get_index(node, arr[0], num);
     int indexb = get_index(node, arr[1], num);
 
-    if(indexa < 0 || indexb < 0)
-        mx_invalid_number(node, arr, num);    
+    if (indexa < 0 || indexb < 0)
+    {
+        if (indexa < 0)
+            mx_strdel(&arr[0]);
+        else
+            mx_strdel(&arr[1]);
+        mx_invalid_number(node, arr, num);
+    }
     mx_add_path(node[indexa], node[indexb], mx_atoi(arr[2]));
     mx_strdel(&arr[2]);
     free(arr);

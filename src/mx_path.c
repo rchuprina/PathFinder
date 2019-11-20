@@ -61,21 +61,20 @@ void mx_add_to_list(t_path **list, void *node, int val)
 
 void mx_poppath_back(t_path **head)
 {
-    if (*head)
+    if (!head || !(*head))
+        return;
+    if ((*head)->next)
     {
-        if ((*head)->next)
-        {
-            t_path *p = *head;
+        t_path *p = *head;
 
-            while (p->next->next)
-                p = p->next;
-            free(p->next);
-            p->next = NULL;
-        }
-        else
-        {
-            free(*head);
-            *head = NULL;
-        }
+        while (p->next->next)
+            p = p->next;
+        free(p->next);
+        p->next = NULL;
+    }
+    else
+    {
+        free(*head);
+        *head = NULL;
     }
 }
